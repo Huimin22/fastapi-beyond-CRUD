@@ -1,0 +1,37 @@
+name: PR Check
+
+on:
+  pull_request:
+    branches: "main"
+
+jobs:
+  check-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Verify Conventional Commits
+        uses: webiny/action-conventional-commits@v1.3.0
+        with:
+          GITHUB_TOKEN: ${{ secrets.MYTOKEN }}
+
+      - name: Close PR on failure
+        if: failure()
+        uses: peter-evans/close-pull@v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.MYTOKEN }}
+          comment: Auto-closing pull request
+
+      - name: Send Notification Email
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.ETHEREAL_ADDRESS }}
+          server_port: ${{ secrets.ETHEREAL_PORT }}
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          from: "GitHub Actions"
+          to: "${{ github.event.pull_request.user.login }}@email.com"
+          subject: "PR Closed: Commit message format incorrect"
+          body: "Your PR was closed because it did not follow Conventional Commit standards. Please update your commit messages."
