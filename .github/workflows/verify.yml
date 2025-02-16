@@ -2,7 +2,8 @@ name: PR Check
 
 on:
   pull_request:
-    branches: "main"
+    branches: 
+      - main
 
 jobs:
   check-commits:
@@ -13,14 +14,12 @@ jobs:
 
       - name: Verify Conventional Commits
         uses: webiny/action-conventional-commits@v1.3.0
-        with:
-          GITHUB_TOKEN: ${{ secrets.MYTOKEN }}
 
       - name: Close PR on failure
         if: failure()
         uses: peter-evans/close-pull@v3
         with:
-          GITHUB_TOKEN: ${{ secrets.MYTOKEN }}
+          token: ${{ secrets.MYTOKEN }}
           comment: Auto-closing pull request
 
       - name: Send Notification Email
@@ -32,6 +31,6 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           from: "GitHub Actions"
-          to: "${{ github.event.pull_request.user.login }}@email.com"
+          to: ${{ secrets.EMAIL_TO }}
           subject: "PR Closed: Commit message format incorrect"
           body: "Your PR was closed because it did not follow Conventional Commit standards. Please update your commit messages."
