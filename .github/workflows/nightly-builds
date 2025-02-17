@@ -34,12 +34,12 @@ jobs:
             if: failure()
             uses: dawidd6/action-send-mail@v3
             with:
-              server_address: smtp.ethereal.email
-              server_port: 
+              server_address: ${{ secrets.ETHEREAL_ADDRESS }}
+              server_port: ${{ secrets.ETHEREAL_PORT }}
               username: ${{ secrets.EMAIL_USERNAME }}
               password: ${{ secrets.EMAIL_PASSWORD }}
               from: "GitHub Actions <noreply@github.com>"
-              to: 
+              to: ${{ secrets.EMAIL_TO }}
               subject: "Nightly Build Failed"
               body: "The nightly build failed. Please check the logs for details."
 
