@@ -28,9 +28,10 @@ jobs:
           cp .env.example .env
 
       - name: Run tests
-        run:
-          python -m pytest 
-    
+        run: |
+          pip install pytest
+          pytest src/tests/
+
       - name: Send Failure Notification
         if: failure()
         uses: dawidd6/action-send-mail@v3
