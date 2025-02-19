@@ -76,6 +76,14 @@ Run the tests using this command
 pytest
 ```
 
+## GitHub Actions Workflows
+
+### 1. Conventional Commits Verification  
+This workflow ensures that all pull requests follow the [Conventional Commits] standard. When a PR is created, the workflow checks the commit messages. If they do not adhere to the required format, the PR is automatically closed, and a notification is sent to inform the user of the failure.  
+
+### 2. Nightly Build and Deployment  
+A scheduled workflow runs every night at **12 AM** to build the project from the `main` branch. The workflow executes test cases using `pytest`. If all tests pass, the container image is pushed to a selected container registry. If any test fails, the build process stops, the image is not stored, and a notification is sent to users about the failure.  
+
 ## Contributing
 I welcome contributions to improve the documentation! You can contribute [here](https://github.com/jod35/fastapi-beyond-crud-docs).
 
