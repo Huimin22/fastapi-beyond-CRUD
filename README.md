@@ -88,4 +88,4 @@ A scheduled workflow runs every night at **12 AM** to build the project from the
 I welcome contributions to improve the documentation! You can contribute [here](https://github.com/jod35/fastapi-beyond-crud-docs).
 
 ## Test
-change this readme for pr test
+this readme is for pr check
